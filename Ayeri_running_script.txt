@@ -1,0 +1,280 @@
+clear stack;
+set flag-is-epsilon ON; 
+######################################################################################
+######################################################################################
+
+#defining Vowels and Consonants p. 8 + 10
+
+define Vowels [ i | ī | e | ē | u | ū | o | ō | a | ā | aː ];
+
+define FrontVowels [ i | ī | e | ē ];
+
+define BackVowels [ u | ū | o | ō ];
+
+define CenterVowels [ a | ā ];
+
+define LongVowels [ ā | ē | ī | ō | ū ];
+
+define ShortVowels [ a | e | i | o | u ];
+
+#defining Consonants p. 8
+
+define Cons [ p | b | t | d | k | g | c | j | m | n | n g | v | s | h | r | l | y | ŋ | ʧ | ʤ ];
+
+define Opensyllable [ Cons Vowels];
+
+define Closedsyllable [Cons Vowels Cons ];
+
+define Diphtongs [ a ɪ | e ɪ | ɔ ɪ | ʊ ɪ | a ʊ ];
+
+
+define RemoveSymbols1 [  2  -> 0 ]; 
+define RemoveSymbols2 [ %^ -> 0  ]; 
+define RemoveSymbols3 [  %} -> 0 ]; 
+define RemoveSymbols4 [  %]  -> 0 ]; 
+define RemoveSymbols5 [  %[  -> 0  ]; 
+define RemoveSymbols6 [  %{ -> 0 ]; 
+define RemoveSymbols7 [  [%^%]] -> 0 ]; 
+define RemoveSymbols8 [  [%^%[] -> 0 ]; 
+
+
+#######################################################################################
+#######################################################################################
+
+#Prefix vor dem 1. Lexem löschen, weil nur vor 2. erwünscht bei reduplication
+
+ 
+define DeletePrefix1 [ [ %- k u %- ] -> 0 || .#. _ ?* [ %- k u %- ]];
+define DeletePrefix2 [ [ %- d a %- ] -> 0 || .#. _ ?* [ %- d a %- ]];
+define DeletePrefix3 [ [ %- e d a %- ] -> 0 || .#. _ ?* [ %- e d a %- ]];
+define DeletePrefix4 [ [ %- a d a %- ] -> 0 || .#. _ ?* [ %- a d a %- ]];
+
+
+########################################################################################
+########################################################################################
+
+# Consonant-Rules p. 7 ++
+
+define NGrule [ n g -> ŋ ];
+
+define Nasn [ n -> ŋ || _ (%.) k ];
+
+
+# tj kj as [ʧ] except if a homorganic nasal /n/ or /ŋ/ is preceding p. 7
+
+define TJandKJ [ t j -> ʧ || \[ n | ŋ ]_ ,, k j -> ʧ || \[ n | ŋ ]_ ];
+
+# dj gj as [ʤ] except if a homorganic nasal /n/ or /ŋ/ is preceding p. 7
+
+define DJandGJ [ d j -> ʤ || \[ n | ŋ ]_ ,,  g j -> ʤ || \[ n | ŋ ]_ ];
+
+
+
+define CasTSCH [ c -> ʧ ];
+
+
+
+#######################################################################################
+
+# Consonant-Rules p. 7 ++
+
+
+# The plural marker -ye is commonly contracted to [ʤ] when a case suffix beginning 
+# with a vowel that is not /e/ follows p. 9 Genitiv regel endung vorher anwenden
+
+#define PluralYEone [ y e -> ʤ ||  _[ Vowels | [\[ e | ē | eː ]]] ];
+
+# The same happens before the locative marker -ya and the dative marker -yam p. 9
+
+define PluralYEtwo [ y e y a m -> ʤ j a m .o. y e y a -> ʤ j a .o. y e -> ʤ ||  _ [ Vowels \[ e | ē | eː ]] .o. y e -> j e];
+
+
+#######################################################################################
+
+# Consonant-Rules p. 7 ++
+
+
+# tj kj as [ʧ] except if a homorganic nasal /n/ or /ŋ/ is preceding p. 7
+# Allophon IPA
+
+
+# dj gj as [ʤ] except if a homorganic nasal /n/ or /ŋ/ is preceding p. 7
+# Allophon IPA erst nach den plural regeln + TJandKJ + DJandGJ
+
+
+#######################################################################################
+
+# Consonant-Rules p. 7 ++
+
+
+# Lastly, /h/ may assimilate to its phonemic environment and is realized as [ç] before 
+# front vowels, and as [x] before back vowels p. 9
+
+
+define HassimilatesToc [ h -> ç || _FrontVowels ];
+
+define HassimilatesTox [ h -> x || _BackVowels ];
+
+
+
+########################################################################################
+########################################################################################
+
+
+# Vowel-Rules p. 10 ++ miŋ bzw ming
+
+#The lax vowels [ɪ ɛ ɔ ʊ] occur as allophones of their tense counterparts /i e o u/ 
+# in closed syllables p. 10
+
+define LaxVowelI [ i -> ɪ || Cons _ Cons ];
+define LaxVowelE [ e -> ɛ || Cons _ Cons ];
+define LaxVowelO [ o -> ɔ || Cons _ Cons ];
+define LaxVowelU [ u -> ʊ || Cons _ Cons ];
+
+
+																							 
+
+
+
+########################################################################################
+
+# Vowel-Rules p. 10 ++
+
+# diphthong-Rules p. 10
+
+define DiphRuleAY [ a y -> a ɪ ];
+define DiphRuleEY [ e y -> e ɪ ];
+define DiphRuleOY [ o y -> ɔ ɪ ];
+define DiphRuleUY [ u y -> ʊ ɪ ];
+define DiphRuleAU [ a u -> a ʊ ];
+
+# Long vowel-rules p. 10
+
+define LongVowelrule1 [a -> ː || a (%.) _ ] ;
+define LongVowelrule2 [e -> ː || e (%.) _ ] ;
+define LongVowelrule3 [i -> ː || i (%.) _ ] ;
+define LongVowelrule4 [o -> ː || o (%.) _ ] ;
+define LongVowelrule5 [u -> ː || u (%.) _ ] ;
+define LongVowelrule6 [ā -> aː]; 
+define LongVowelrule7 [ē -> eː];
+define LongVowelrule8 [ī -> iː];
+define LongVowelrule9 [ō -> oː]; 
+define LongVowelrule10[ū -> uː];
+
+
+
+
+########################################################################################
+
+# Vowel-Rules p. 10 ++ / # Consonant-Rules p. 7 ++
+
+# the double /j/ simplifies to just a single /j/ p. 9 + 11
+
+define DoubleYasJ [ y y -> y];
+
+define yAsj [ y -> j];
+
+########################################################################################
+
+# Vowel-Rules p. 10 ++ 
+
+# Moreover, /u/ is commonly realized as[w] when followed by a vowel p. 11
+
+define uAsw [ u -> w || _Vowels];
+
+
+# The negative suffix oy is also commonly contracted to [w] before a diphthong p. 12
+
+define OYasW [ o y -> w || _ [ a y | a ɪ ] ,, o y -> w || _[ e y | e ɪ ] ,, o y  -> w || _[ o y | ɔ ɪ ] ,, 
+o y -> w || _[ u y | ʊ ɪ ] ,, o y -> w || _[ a u | a ʊ ]];
+
+
+########################################################################################
+########################################################################################
+
+# Genitive-rule p. 119 + Instrumental-rule p. 122
+
+# The genitive is marked on common nouns with the suffix -na. If a noun stem ends 
+# in a consonant, the marker becomes -ena
+
+define GenRule [ E -> e || Cons (%.) _ ];
+
+define GenRule2[ E -> 0 || [[Vowels [\e]] | Diphtongs ] (%.) _ ];
+
+define InsRuleException [ E -> [ e | 0] || e (%.) _ r i ];
+
+
+
+
+define UYasW [u y -> w || _ Vowels];
+
+########################################################################################
+########################################################################################
+
+
+# Apply the rules
+read regex 
+NGrule 
+.o. Nasn .o. UYasW
+.o. DiphRuleUY 
+.o. DiphRuleEY
+.o. DiphRuleOY
+.o. DiphRuleAU
+.o. DiphRuleAY 
+.o. RemoveSymbols1
+.o. RemoveSymbols2
+.o. RemoveSymbols3
+.o. RemoveSymbols4
+.o. RemoveSymbols5
+.o. RemoveSymbols6
+.o. RemoveSymbols7
+.o. RemoveSymbols8
+.o. DeletePrefix1 
+.o. DeletePrefix2 
+.o. DeletePrefix3  
+.o. DeletePrefix4 
+.o. CasTSCH 
+.o. InsRuleException 
+.o. GenRule 
+.o. GenRule2 
+.o. PluralYEtwo
+.o. yAsj
+.o. DoubleYasJ
+.o. TJandKJ 
+.o. DJandGJ 
+.o. uAsw 
+.o. HassimilatesToc 
+.o. HassimilatesTox 
+.o. LaxVowelU
+.o. LaxVowelI
+.o. LaxVowelO 
+.o. LaxVowelE 
+.o. OYasW 
+.o. LongVowelrule1 
+.o. LongVowelrule2
+.o. LongVowelrule3 
+.o. LongVowelrule4 
+.o. LongVowelrule6 
+.o. LongVowelrule7 
+.o. LongVowelrule8 
+.o. LongVowelrule9
+.o. LongVowelrule10 ;
+
+
+
+
+
+
+read lexc < /Users/fabiendallmann/Desktop/Computational_Morphology/Ayeri_Lexc.lexc;
+#set flag-is-epsilon ON; 
+
+compile-replace lower;
+compose net;
+turn stack;
+
+#compose net;
+#apply down < /Users/fabiendallmann/Desktop/Computational_Morphology/Ayeri_UpperWords.txt > /Users/fabiendallmann/Desktop/Computational_Morphology/Ayeri_Output.txt;
+
+
+
+

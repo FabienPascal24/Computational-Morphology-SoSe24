@@ -1,0 +1,143 @@
+Multichar_Symbols +Sg +Pl @P.Animacy.animate@ @P.Animacy.inanimate@ +A +P +Dat +Gen+ +Loc 
++Caus +Ins NPref+ +Q +Top @P.Topic.ON@ @D.Topic.ON@ @R.Topic.ON@ @P.Number.Pl@ @D.Number.Pl@
++Adj +Noun +Nom +Comp +Supl +Neg APref+ ^[ ^] +Dim 
+
+
+LEXICON Root
+ Nouns ;
+ Adjectives ;
+ NounPrefixes ; 
+ AdjectivePrefixes ; 
+ 0:^[{ DimWithPref ;
+
+ 
+ 
+LEXICON Nouns
+mavi:ma.vi. SetAnimate ;
+tipuy:ti.puy. SetAnimate ;
+lā:lā. SetAnimate ;
+nekuyi:ne.kuyi. SetAnimate ; 
+kina:ki.na. SetAnimate ;
+melung:me.lung. SetInanimate ;
+tinkay:tin.kay. SetInanimate ;
+
+
+LEXICON Adjectives
+cāmpuluy:cām.pu.luy. IsAdjective ; 
+tahi:ta.hi. IsAdjective ;
+baho:ba.ho. IsAdjective ;
+pakur:pa.kur. IsAdjective ;
+
+
+LEXICON DimWithPref
+NPref+:-ku- Nouns ;
+NPref+:-da- Nouns ; ! "such" 
+NPref+:-eda- Nouns ; ! "this"
+NPref+:-ada- Nouns ; ! "that"
+
+LEXICON SetAnimate
++Dim:}^2^] IsAnimate ;
+@P.Animacy.animate@ IsNoun ;
+
+
+LEXICON SetInanimate
++Dim:}^2^] IsInanimate ;
+@P.Animacy.inanimate@ IsNoun ;
+
+
+
+LEXICON IsInanimate
+@P.Animacy.inanimate@ IsNoun ;
+
+
+LEXICON IsAnimate
+@P.Animacy.animate@ IsNoun ;
+
+
+LEXICON IsAdjective
++Adj:0 # ; 
++Adj:0 AdjectiveComparison ; 
++Adj:0 AdjectiveNegation ; 
++Adj:0 AdjectiveNominalization ;
+
+
+LEXICON IsNoun
++Noun:0 IsTopic ;
++Noun:0 Number ;
+ IsAdjective ;
+
+
+LEXICON IsTopic
+< "+Top":[0] "@P.Topic.ON@" > Number ; 
+
+
+LEXICON Number
+< "+Pl":[[y] [e] ] "@D.Topic.ON@" "@P.Number.Pl@" > Case ;
+< "+Sg":[0] "@D.Topic.ON@"  > Case ;
+< "+Pl":[[y] [e] ] "@R.Topic.ON@"  > # ;
+< "+Sg":[0] "@R.Topic.ON@"  > # ;
+
+
+LEXICON Case
+< "+A":[[a] [n] [g] ] "@R.Animacy.animate@" "@D.Animacy.inanimate@" > # ; 	
+< "+A":[[r] [e] [n] [g] ] "@R.Animacy.inanimate@" "@D.Animacy.animate@" >  # ; 	
+< "+P":[[a] [s] ] "@R.Animacy.animate@" "@D.Animacy.inanimate@" > # ; 	
+< "+P":[[l] [e] [y] ] "@R.Animacy.inanimate@" "@D.Animacy.animate@" > # ; 	
+< "+Dat":[[y] [a] [m] ] > # ; 	
+< "+Gen":[[E] [n] [a] ] > # ; ! If a noun stem ends in a consonant, the marker become  -ena, sonst na
+< "+Loc":[[y] [a] ] > # ; 
+< "+Caus":[[i] [s] [a] ] > # ;
+< "+Ins":[[E] [r] [i] ] > # ; ! ri ending in a vowel, eri  when ending in a cons
+< "+A":[[a] [n] [g] ] "@R.Animacy.animate@" "@D.Animacy.inanimate@" > Quantifier ; 	
+< "+A":[[r] [e] [n] [g] ] "@R.Animacy.inanimate@" "@D.Animacy.animate@" >  Quantifier ; 	
+< "+P":[[a] [s] ] "@R.Animacy.animate@" "@D.Animacy.inanimate@" > Quantifier ; 	
+< "+P":[[l] [e] [y] ] "@R.Animacy.inanimate@" "@D.Animacy.animate@" > Quantifier ; 	
+< "+Dat":[[y] [a] [m] ] > Quantifier ; 	
+< "+Gen":[[E] [n] [a] ] > Quantifier ; 
+< "+Loc":[[y] [a] ] > Quantifier ; 
+< "+Caus":[[i] [s] [a] ] > Quantifier ;
+< "+Ins":[[E] [r] [i] ] > Quantifier ;
+
+
+LEXICON NounPrefixes 
+< "NPref+":[[k] [u] [%-] ] > Nouns ; !
+< "NPref+":[[d] [a] [%-] ] > Nouns ; ! "such" 
+< "NPref+":[[e] [d] [a] [%-] ] > Nouns ; ! "this"
+< "NPref+":[[a] [d] [a] [%-] ] > Nouns ; ! "that"
+
+
+LEXICON AdjectivePrefixes
+< "APref+":[[k] [u] [%-] ] > Adjectives ; !like
+< "APref+":[[d] [a] [%-] ] > Adjectives ; !"such" 
+< "APref+":[[e] [d] [a] [%-] ] > Adjectives ; ! "this"
+< "APref+":[[a] [d] [a] [%-] ]> Adjectives ; ! "that"
+
+
+LEXICON AdjectiveNominalization
+<"+Nom":[[a] [n] ] "@D.Animacy.animate@" "@D.Animacy.inanimate@"> AdjectiveComparison ; 
+<"+Nom":[[a] [n] ] "@D.Animacy.animate@" "@D.Animacy.inanimate@"> # ; 
+
+
+LEXICON AdjectiveComparison
+< "+Comp":[[%-] [e] [n] [g] ] > AdjectiveNegation ;
+< "+Comp":[[%-] [e] [n] [g] ] > # ;
+< "+Supl":[[%-] [v] [ā]]  > AdjectiveNegation ;
+< "+Supl":[[%-] [v] [ā]] > # ;
+
+
+LEXICON AdjectiveNegation
+< "+Neg":[[a] [r] [y] [a]] > # ;
+< "+Neg":[[o] [y]] > # ;
+
+
+LEXICON Quantifier 
+< "+Q":[[%-] [i] [k] [a] [n]] "@D.Number.Pl@" > # ; 	! "many / much" very
+< "+Q":[[%-] [i] [k] [o] [y]] "@D.Number.Pl@" > # ; 	! "not many / much" not very
+< "+Q":[[%-] [a] [r] [i] [l]] "@D.Number.Pl@" > # ; 	! "some"
+< "+Q":[[%-] [e] [n] [g]] "@D.Number.Pl@" > # ; 	! "more" rather
+< "+Q":[[%-] [h] [e] [n]] "@D.Number.Pl@" > # ; 	! "all, every, each " 
+< "+Q":[[%-] [k] [a] [y]] "@D.Number.Pl@" > # ; 	! "few" a bit
+< "+Q":[[%-] [v] [ā]] "@D.Number.Pl@" > # ; 	! "most"
+
+
+
